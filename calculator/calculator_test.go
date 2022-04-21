@@ -130,3 +130,23 @@ func TestSqrtInvalid(t *testing.T) {
 		t.Error("Sqrt(-36) want error for invalid, for nil")
 	}
 }
+
+func TestAddMany(t *testing.T) {
+	t.Parallel()
+	type testCase struct {
+		inputs []float64
+		want   float64
+	}
+	testCases := []testCase{
+		{inputs: []float64{2, 3, 4, 5, 6}, want: 20},
+		{inputs: []float64{5, 5, 5, 5, 5}, want: 25},
+		{inputs: []float64{10, -10, 50, -50, 6}, want: 6},
+		{inputs: []float64{20, .5, .4, -.4, -.5}, want: 20},
+	}
+	for _, tc := range testCases {
+		got := calculator.AddMany(tc.inputs...)
+		if got != tc.want {
+			t.Errorf("AddMany(%f): want %f, got %f", tc.inputs, tc.want, got)
+		}
+	}
+}
